@@ -1,0 +1,81 @@
+{
+  "name": "use-form-light",
+  "version": "1.0.0",
+  "description": "use-form-light is a very small React library that helps you manage forms and gives you ready-made form components with built-in checks",
+  "keywords": [
+    "react-hook-form",
+    "use-form",
+    "use-form-light",
+    "react-library",
+    "form-ui",
+    "react",
+    "hooks",
+    "form",
+    "forms",
+    "form-validation",
+    "validation",
+    "typescript",
+    "react-hooks"
+  ],
+  "homepage": "https://github.com/LeeEugene1/use-form-light#readme",
+  "bugs": {
+    "url": "https://github.com/LeeEugene1/use-form-light/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeEugene1/use-form-light.git"
+  },
+  "license": "MIT",
+  "author": "LeeEugene",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.7",
+    "@microsoft/api-extractor": "^7.51.0",
+    "@rollup/plugin-commonjs": "^26.0.3",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@swc/core": "^1.11.5",
+    "@swc/jest": "^0.2.37",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@types/jest": "^29.5.14",
+  "@types/react": "^18.0.0",
+  "@types/react-dom": "^18.3.5",
+    "@types/testing-library__jest-dom": "^5.14.9",
+    "bundlewatch": "^0.3.3",
+    "cypress": "^13.17.0",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-cypress": "^3.6.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-fixed-jsdom": "^0.0.9",
+    "jest-preview": "^0.3.1",
+    "lint-staged": "^15.4.3",
+    "msw": "^2.7.3",
+    "prettier": "^3.3.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-test-renderer": "^18.3.1",
+    "rimraf": "^5.0.10",
+    "rollup": "^4.34.8",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "tsd": "^0.31.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^7.18.0",
+    "whatwg-fetch": "^3.6.20",
+    "zod": "^3.24.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17 || ^18 || ^19"
+  }
+}
