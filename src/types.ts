@@ -28,3 +28,16 @@ export type InputProps = {
   styleOption?: "default" | "headless";
   className?: string;
 };
+
+export type UseFormReturn<T extends FormValues> = {
+  register: (name: keyof T) => {
+    name: keyof T;
+    value: T[keyof T];
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+  handleSubmit: (callback: (data: T) => void) => (e: React.FormEvent) => void;
+  errors: Record<string, string>;
+  values: T;
+  reset: () => void;
+  validate: () => boolean;
+};

@@ -1,4 +1,4 @@
-import { FormProps, InputProps, FormValues } from "../types";
+import type { FormProps, InputProps, FormValues } from "../types";
 
 export function Form<T extends FormValues>({
   children,
@@ -28,6 +28,8 @@ export function Input({
     <div>
       <input
         {...register}
+        id={register.name}
+        aria-label={register.name}
         className={`${styleOption === "default" ? "input-default" : ""} ${
           className || ""
         }`}

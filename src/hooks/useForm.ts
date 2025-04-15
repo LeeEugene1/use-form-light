@@ -1,23 +1,20 @@
 import { useState } from "react";
-
-type ValidationRule = {
-  pattern: RegExp;
-  message: string;
-};
-
-type ValidationRules<T> = {
-  [K in keyof T]?: ValidationRule;
-};
+import {
+  ValidationRule,
+  ValidationRules,
+  FormValues,
+  UseFormReturn,
+} from "../types";
 
 type FormState<T> = {
   values: T;
   errors: Record<string, string>;
 };
 
-export function useForm<T extends Record<string, any>>(options?: {
+export function useForm<T extends FormValues>(options?: {
   defaultValues?: T;
   validationRules?: ValidationRules<T>;
-}) {
+}): UseFormReturn<T> {
   const [formState, setFormState] = useState<FormState<T>>({
     values: options?.defaultValues ?? ({} as T),
     errors: {},
@@ -60,7 +57,7 @@ export function useForm<T extends Record<string, any>>(options?: {
       }));
 
       // 해당 필드의 validation rule이 있으면 즉시 검증
-      const rule = options?.validationRules?.[name as keyof T];
+      const rule = options?.validationRules?.[name];
       if (rule) {
         const isValid = rule.pattern.test(newValue);
         setFormState((prev) => ({
@@ -90,7 +87,14 @@ export function useForm<T extends Record<string, any>>(options?: {
   const handleSubmit = (callback: (data: T) => void) => {
     return (e: React.FormEvent) => {
       e.preventDefault();
-      callback(formState.values);
+
+      // 폼 유효성 검사
+      const isValid = validate();
+
+      // 유효성 검사 통과 시에만 콜백 실행
+      if (isValid) {
+        callback(formState.values);
+      }
     };
   };
 
