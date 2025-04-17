@@ -1,70 +1,71 @@
 {
-	"name": "use-form-light",
-	"version": "1.0.3",
-	"description": "use-form-light is a very small React library that helps you manage forms and gives you ready-made form components with built-in checks",
-	"keywords": [
-		"react-hook-form",
-		"use-form",
-		"use-form-light",
-		"react-library",
-		"form-ui",
-		"react",
-		"hooks",
-		"form",
-		"forms",
-		"form-validation",
-		"validation",
-		"typescript",
-		"react-hooks"
-	],
-	"homepage": "https://github.com/LeeEugene1/use-form-light#readme",
-	"bugs": {
-		"url": "https://github.com/LeeEugene1/use-form-light/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/LeeEugene1/use-form-light.git"
-	},
-	"license": "MIT",
-	"author": "LeeEugene",
-	"type": "module",
-	"main": "dist/index.js",
-	"module": "dist/index.esm.js",
-	"types": "dist/index.d.ts",
-	"files": [
-		"dist",
-		"README.md"
-	],
-	"scripts": {
-		"lint": "biome lint .",
-		"format": "biome format --write .",
-		"check": "biome check .",
-		"build": "rollup -c",
-		"test": "jest"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@rollup/plugin-commonjs": "^26.0.3",
-		"@rollup/plugin-node-resolve": "^15.3.1",
-		"@rollup/plugin-terser": "^0.4.4",
-		"@testing-library/jest-dom": "^6.6.3",
-		"@testing-library/react": "^16.3.0",
-		"@testing-library/user-event": "^14.6.1",
-		"@types/jest": "^29.5.14",
-		"@types/react": "^18.3.20",
-		"@types/react-dom": "^18.3.6",
-		"identity-obj-proxy": "^3.0.0",
-		"jest": "^29.7.0",
-		"jest-environment-jsdom": "^29.7.0",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"rollup": "^4.34.8",
-		"rollup-plugin-dts": "^6.1.0",
-		"rollup-plugin-typescript2": "^0.36.0",
-		"ts-jest": "^29.3.1",
-		"typescript": "^5.8.3"
-	},
-	"peerDependencies": {
-		"react": "^16.8.0 || ^17 || ^18 || ^19"
-	}
+  "name": "use-form-light",
+  "version": "1.0.4",
+  "description": "use-form-light is a very small React library that helps you manage forms and gives you ready-made form components with built-in checks",
+  "keywords": [
+    "react-hook-form",
+    "use-form",
+    "use-form-light",
+    "react-library",
+    "form-ui",
+    "react",
+    "hooks",
+    "form",
+    "forms",
+    "form-validation",
+    "validation",
+    "typescript",
+    "react-hooks"
+  ],
+  "homepage": "https://github.com/LeeEugene1/use-form-light#readme",
+  "bugs": {
+    "url": "https://github.com/LeeEugene1/use-form-light/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeEugene1/use-form-light.git"
+  },
+  "license": "MIT",
+  "author": "LeeEugene",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "build": "rollup -c",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@rollup/plugin-commonjs": "^26.0.3",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^4.34.8",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "ts-jest": "^29.3.1",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17 || ^18 || ^19"
+  }
 }

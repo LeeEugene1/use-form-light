@@ -47,19 +47,35 @@ export function useForm<T extends FormValues>(options?: {
   const register = (name: keyof T) => ({
     name,
     value: formState.values[name],
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.value;
+    onChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+      const { name, value, type, id } = e.target as HTMLInputElement;
+      const checked = (e.target as HTMLInputElement).checked;
 
-      // 값 업데이트
-      setFormState((prev) => ({
-        ...prev,
-        values: { ...prev.values, [name]: newValue },
-      }));
+      if (type === "checkbox") {
+        setFormState((prev) => ({
+          ...prev,
+          values: { ...prev.values, [name]: checked },
+        }));
+      } else if (type === "radio") {
+        if (checked) {
+          setFormState((prev) => ({
+            ...prev,
+            values: { ...prev.values, [name]: id },
+          }));
+        }
+      } else {
+        setFormState((prev) => ({
+          ...prev,
+          values: { ...prev.values, [name]: value },
+        }));
+      }
 
       // 해당 필드의 validation rule이 있으면 즉시 검증
       const rule = options?.validationRules?.[name];
       if (rule) {
-        const isValid = rule.pattern.test(newValue);
+        const isValid = rule.pattern.test(value);
         setFormState((prev) => ({
           ...prev,
           errors: {
@@ -78,8 +94,23 @@ export function useForm<T extends FormValues>(options?: {
   });
 
   const reset = () => {
+    const defaultValues = options?.defaultValues ?? ({} as T);
+
+    // 모든 input 요소를 찾아서 초기화
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => {
+      const name = input.name as keyof T;
+      if (name) {
+        if (input.type === "checkbox") {
+          input.checked = Boolean(defaultValues[name]);
+        } else if (input.type === "radio") {
+          input.checked = input.id === defaultValues[name];
+        }
+      }
+    });
+
     setFormState({
-      values: options?.defaultValues ?? ({} as T),
+      values: defaultValues,
       errors: {},
     });
   };

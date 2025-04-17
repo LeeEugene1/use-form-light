@@ -43,3 +43,5 @@ example/build/
 /cypress/parallel-weights.json
 /cypress/screenshots
 /cypress/fixtures
+
+src/css.d.ts

@@ -6,7 +6,12 @@ export default {
   },
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.(ts|tsx)$": [
+      "ts-jest",
+      {
+        tsconfig: "tsconfig.json",
+      },
+    ],
   },
   globals: {
     "ts-jest": {
