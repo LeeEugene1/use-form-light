@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Form.module.css";
+import { styles } from "./Form.css";
 import { FormProps, InputProps, TextareaProps, ButtonProps } from "../types";
 
 const Input: React.FC<InputProps & ButtonProps> = ({
@@ -12,18 +12,17 @@ const Input: React.FC<InputProps & ButtonProps> = ({
   ...props
 }) => {
   return (
-    <div className={styleOption === "default" ? styles.inputContainer : ""}>
+    <div style={styleOption === "default" ? styles.inputContainer : undefined}>
       {children && <label htmlFor={register?.name}>{children}</label>}
       <input
         id={register?.name}
         type={type}
         {...register}
-        className={`${
-          styleOption === "default" ? styles.input : ""
-        } ${className}`}
+        style={styleOption === "default" ? styles.input : undefined}
+        className={className}
         {...props}
       />
-      {error && <span className={styles.error}>{error}</span>}
+      {error && <span style={styles.error}>{error}</span>}
     </div>
   );
 };
@@ -37,17 +36,18 @@ const Textarea: React.FC<TextareaProps> = ({
   ...props
 }) => {
   return (
-    <div className={styleOption === "default" ? styles.textareaContainer : ""}>
+    <div
+      style={styleOption === "default" ? styles.textareaContainer : undefined}
+    >
       {children && <label htmlFor={register?.name}>{children}</label>}
       <textarea
         id={register?.name}
         {...register}
-        className={`${
-          styleOption === "default" ? styles.textarea : ""
-        } ${className}`}
+        style={styleOption === "default" ? styles.textarea : undefined}
+        className={className}
         {...props}
       />
-      {error && <span className={styles.error}>{error}</span>}
+      {error && <span style={styles.error}>{error}</span>}
     </div>
   );
 };
@@ -60,9 +60,8 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`${
-        styleOption === "default" ? styles.button : ""
-      } ${className}`}
+      style={styleOption === "default" ? styles.button : undefined}
+      className={className}
       {...props}
     >
       {children}
@@ -79,7 +78,8 @@ export const Form = <T extends Record<string, any>>({
   return (
     <form
       onSubmit={onSubmit}
-      className={`${styleOption === "default" ? styles.form : ""} ${className}`}
+      style={styleOption === "default" ? styles.form : undefined}
+      className={className}
     >
       {children}
     </form>

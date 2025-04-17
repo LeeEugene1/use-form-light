@@ -3,7 +3,6 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import dts from "rollup-plugin-dts";
-import postcss from "rollup-plugin-postcss";
 
 export default [
   {
@@ -23,17 +22,6 @@ export default [
     plugins: [
       resolve(),
       commonjs(),
-      postcss({
-        extract: true,
-        modules: true,
-        autoModules: true,
-        minimize: true,
-        use: {
-          sass: null,
-          stylus: null,
-          less: null,
-        },
-      }),
       typescript({
         tsconfig: "tsconfig.json",
         useTsconfigDeclarationDir: true,
