@@ -7,7 +7,6 @@ const buildOptions = {
   target: ['es2015'],
   format: 'esm',
   outfile: 'dist/index.mjs',
-  sourcemap: true,
   external: ['react', 'react/jsx-runtime'],
 };
 
