@@ -13,6 +13,14 @@ type FormData = {
 function App() {
   const { register, handleSubmit, errors, validate, reset, values, watch } =
     useForm<FormData>({
+      defaultValues: {
+        name: "",
+        email: "",
+        mobile: "",
+        gender: "male",
+        agree: false,
+        message: "",
+      },
       validationRules: {
         name: {
           pattern: /^.{2,}$/,
@@ -102,8 +110,11 @@ function App() {
             marginTop: "20px",
           }}
         >
-          <Button type="submit" style={{ width: "100%" }}>
+          <Button type="submit" style={{ width: "50%" }}>
             제출
+          </Button>
+          <Button type="button" style={{ width: "50%" }} onClick={reset}>
+            초기화
           </Button>
         </div>
       </Form>
