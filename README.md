@@ -13,54 +13,14 @@ yarn add use-form-light
 ## 사용 방법
 
 ### 기본 사용법
-
-```tsx
-import { useForm } from "use-form-light";
-
-function MyForm() {
-  const { register, handleSubmit, errors } = useForm({
-    defaultValues: {
-      name: "",
-      email: "",
-    },
-    validationRules: {
-      name: {
-        pattern: /^.{2,}$/,
-        message: "이름은 2자 이상이어야 합니다",
-      },
-      email: {
-        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        message: "올바른 이메일 형식이 아닙니다",
-      },
-    },
-  });
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <input {...register("name")} />
-        {errors.name && <span>{errors.name}</span>}
-      </div>
-      <div>
-        <input {...register("email")} />
-        {errors.email && <span>{errors.email}</span>}
-      </div>
-      <button type="submit">제출</button>
-    </form>
-  );
-}
-```
+https://codesandbox.io/p/sandbox/use-form-light-submit-validation-m22s8f
 
 ## API
 
 ### useForm
 
 ```typescript
-const { register, handleSubmit, errors, values, reset, validate } =
+const { register, handleSubmit, errors, values, reset, validate, watch } =
   useForm<T>(options);
 ```
 
@@ -77,6 +37,7 @@ const { register, handleSubmit, errors, values, reset, validate } =
 - `values`: 현재 폼 값
 - `reset`: 폼 초기화 함수
 - `validate`: 수동 유효성 검사 함수
+- `watch`: 현재 특정 값
 
 ## 특징
 

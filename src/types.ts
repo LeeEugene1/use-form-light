@@ -62,4 +62,5 @@ export type UseFormReturn<T extends FormValues> = {
   values: T;
   reset: () => void;
   validate: () => boolean;
+  watch: (name?: keyof T) => T[keyof T] | T;
 };

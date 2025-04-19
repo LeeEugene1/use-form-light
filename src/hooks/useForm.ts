@@ -11,38 +11,19 @@ type FormState<T> = {
   errors: Record<string, string>;
 };
 
-export function useForm<T extends FormValues>(options?: {
+type UseFormOptions<T extends FormValues> = {
   defaultValues?: T;
   validationRules?: ValidationRules<T>;
-}): UseFormReturn<T> {
+};
+
+export const useForm = <T extends FormValues>({
+  defaultValues: initialDefaultValues,
+  validationRules,
+}: UseFormOptions<T> = {}): UseFormReturn<T> => {
   const [formState, setFormState] = useState<FormState<T>>({
-    values: options?.defaultValues ?? ({} as T),
+    values: initialDefaultValues ?? ({} as T),
     errors: {},
   });
-
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-    let isValid = true;
-
-    // validationRules 검사
-    if (options?.validationRules) {
-      Object.entries(formState.values).forEach(([key, value]) => {
-        const rule = options.validationRules?.[key];
-        if (rule && !rule.pattern.test(String(value))) {
-          newErrors[key] = rule.message;
-          isValid = false;
-        }
-      });
-    }
-
-    // 기존 errors와 새로운 errors를 병합
-    setFormState((prev) => ({
-      ...prev,
-      errors: { ...prev.errors, ...newErrors },
-    }));
-
-    return isValid;
-  };
 
   const register = (name: keyof T) => ({
     name,
@@ -73,7 +54,7 @@ export function useForm<T extends FormValues>(options?: {
       }
 
       // 해당 필드의 validation rule이 있으면 즉시 검증
-      const rule = options?.validationRules?.[name];
+      const rule = validationRules?.[name];
       if (rule) {
         const isValid = rule.pattern.test(value);
         setFormState((prev) => ({
@@ -93,8 +74,50 @@ export function useForm<T extends FormValues>(options?: {
     },
   });
 
+  const watch = (name?: keyof T) => {
+    if (name) {
+      return formState.values[name];
+    }
+    return formState.values;
+  };
+
+  const handleSubmit = (callback: (data: T) => void) => {
+    return (e: React.FormEvent) => {
+      e.preventDefault();
+      const isValid = validate();
+      if (!isValid) {
+        return;
+      }
+      callback(formState.values);
+    };
+  };
+
+  const validate = () => {
+    if (!validationRules) return true;
+
+    let isValid = true;
+    const newErrors: Record<string, string> = {};
+
+    Object.entries(validationRules).forEach(([name, rule]) => {
+      if (!rule) return;
+      const value = formState.values[name as keyof T];
+      const isValidField = rule.pattern.test(String(value));
+      if (!isValidField) {
+        isValid = false;
+        newErrors[name] = rule.message;
+      }
+    });
+
+    setFormState((prev) => ({
+      ...prev,
+      errors: newErrors,
+    }));
+
+    return isValid;
+  };
+
   const reset = () => {
-    const defaultValues = options?.defaultValues ?? ({} as T);
+    const defaultValues = initialDefaultValues ?? ({} as T);
 
     // 모든 input 요소를 찾아서 초기화
     const inputs = document.querySelectorAll("input");
@@ -115,20 +138,6 @@ export function useForm<T extends FormValues>(options?: {
     });
   };
 
-  const handleSubmit = (callback: (data: T) => void) => {
-    return (e: React.FormEvent) => {
-      e.preventDefault();
-
-      // 폼 유효성 검사
-      const isValid = validate();
-
-      // 유효성 검사 통과 시에만 콜백 실행
-      if (isValid) {
-        callback(formState.values);
-      }
-    };
-  };
-
   return {
     register,
     handleSubmit,
@@ -136,5 +145,6 @@ export function useForm<T extends FormValues>(options?: {
     values: formState.values,
     reset,
     validate,
+    watch,
   };
-}
+};
