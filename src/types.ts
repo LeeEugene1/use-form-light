@@ -60,7 +60,24 @@ export type UseFormReturn<T extends FormValues> = {
   handleSubmit: (callback: (data: T) => void) => (e: React.FormEvent) => void;
   errors: Record<string, string>;
   values: T;
+  setValue: (name: keyof T, value: any) => void;
   reset: () => void;
   validate: () => boolean;
   watch: (name?: keyof T) => T[keyof T] | T;
 };
+
+export type SelectProps = {
+  register?: {
+    name: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  };
+  error?: string;
+  styleOption?: "default" | "headless";
+  className?: string;
+  children?: ReactNode;
+} & React.SelectHTMLAttributes<HTMLSelectElement>;
+
+export type OptionProps = {
+  children?: ReactNode;
+} & React.OptionHTMLAttributes<HTMLOptionElement>;

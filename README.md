@@ -1,8 +1,8 @@
 # use-form-light
 
-React를 위한 가벼운 폼 상태 관리 및 유효성 검사 라이브러리
+A lightweight form state management and validation library for React
 
-## 설치
+## Installation
 
 ```bash
 npm install use-form-light
@@ -10,9 +10,18 @@ npm install use-form-light
 yarn add use-form-light
 ```
 
-## 사용 방법
+## Usage
 
-### 기본 사용법
+### Basic Usage
+
+```typescript
+// Import only what you need
+import { useForm } from 'use-form-light';
+// or specific components
+import { Form, Input, Textarea, Button } from 'use-form-light';
+```
+
+codesandbox example
 https://codesandbox.io/p/sandbox/use-form-light-submit-validation-m22s8f
 
 ## API
@@ -24,29 +33,38 @@ const { register, handleSubmit, errors, values, reset, validate, watch } =
   useForm<T>(options);
 ```
 
-#### 옵션
+#### Options
 
-- `defaultValues`: 폼의 초기값
-- `validationRules`: 유효성 검사 규칙
+- `defaultValues`: Initial form values
+- `validationRules`: Validation rules
 
-#### 반환값
+#### Return Values
 
-- `register`: 입력 필드 등록 함수
-- `handleSubmit`: 폼 제출 핸들러
-- `errors`: 에러 메시지 객체
-- `values`: 현재 폼 값
-- `reset`: 폼 초기화 함수
-- `validate`: 수동 유효성 검사 함수
-- `watch`: 현재 특정 값
+- `register`: Input field registration function
+- `handleSubmit`: Form submission handler
+- `errors`: Error message object
+- `values`: Current form values
+- `reset`: Form reset function
+- `validate`: Manual validation function
+- `watch`: Current specific value
 
-## 특징
+## Features
 
-- 타입 안전성 (TypeScript)
-- 실시간 유효성 검사
-- 커스텀 유효성 검사 규칙
-- 기본/헤드리스 스타일 지원
-- 가벼운 번들 사이즈
+- Type Safety (TypeScript)
+- Real-time validation
+- Custom validation rules
+- Default/Headless style support
+- Optimized performance with minimal re-renders
+- Tree-shaking support for minimal bundle size
 
-## 라이센스
+## Why use-form-light?
+
+- **Extremely Lightweight**: it's significantly smaller than alternatives like react-hook-form
+- **Simple API**: Easy to learn and use with a minimal API surface
+- **TypeScript First**: Full type safety out of the box
+- **Zero Dependencies**: No external dependencies, reducing bundle size
+- **Flexible**: Supports both controlled and uncontrolled components
+
+## License
 
 MIT

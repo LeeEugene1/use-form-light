@@ -1,6 +1,6 @@
 {
   "name": "use-form-light",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "use-form-light is a very small React library that helps you manage forms and gives you ready-made form components with built-in checks",
   "keywords": [
     "react-hook-form",
@@ -29,9 +29,9 @@
   "author": "LeeEugene",
   "type": "module",
   "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "module": "dist/index.mjs",
   "exports": {
-    "import": "./dist/index.js",
+    "import": "./dist/index.mjs",
     "require": "./dist/index.cjs"
   },
   "types": "dist/index.d.ts",
