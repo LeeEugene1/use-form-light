@@ -10,12 +10,10 @@ export default {
       "ts-jest",
       {
         tsconfig: "tsconfig.json",
-      },
-    ],
-  },
-  globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.json",
-    },
-  },
+        diagnostics: {
+          ignoreCodes: [1343]
+        }
+      }
+    ]
+  }
 };

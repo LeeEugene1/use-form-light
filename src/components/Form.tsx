@@ -1,6 +1,6 @@
 import React from "react";
 import { styles } from "./Form.css";
-import { FormProps, InputProps, TextareaProps, ButtonProps } from "../types";
+import type { FormProps, InputProps, TextareaProps, ButtonProps, SelectProps, OptionProps } from "../types";
 
 const Input: React.FC<InputProps & ButtonProps> = ({
   register,
@@ -13,7 +13,6 @@ const Input: React.FC<InputProps & ButtonProps> = ({
 }) => {
   return (
     <div style={styleOption === "default" ? styles.inputContainer : undefined}>
-      {children && <label htmlFor={register?.name}>{children}</label>}
       <input
         id={register?.name}
         type={type}
@@ -39,7 +38,6 @@ const Textarea: React.FC<TextareaProps> = ({
     <div
       style={styleOption === "default" ? styles.textareaContainer : undefined}
     >
-      {children && <label htmlFor={register?.name}>{children}</label>}
       <textarea
         id={register?.name}
         {...register}
@@ -50,6 +48,37 @@ const Textarea: React.FC<TextareaProps> = ({
       {error && <span style={styles.error}>{error}</span>}
     </div>
   );
+};
+
+const Select: React.FC<SelectProps> = ({
+  register,
+  error,
+  styleOption = "default",
+  className = "",
+  children,
+  ...props
+}) => {
+  return (
+    <div style={styleOption === "default" ? styles.selectContainer : undefined}>
+      <select
+        id={register?.name}
+        {...register}
+        style={styleOption === "default" ? styles.select : undefined}
+        className={className}
+        {...props}
+      >
+        {children}
+      </select>
+      {error && <span style={styles.error}>{error}</span>}
+    </div>
+  );
+};
+
+const Option: React.FC<OptionProps> = ({
+  children,
+  ...props
+}) => {
+  return <option {...props}>{children}</option>;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -86,4 +115,4 @@ export const Form = <T extends Record<string, any>>({
   );
 };
 
-export { Input, Textarea, Button };
+export { Input, Textarea, Button, Select, Option };

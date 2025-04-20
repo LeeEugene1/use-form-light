@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  ValidationRule,
   ValidationRules,
   FormValues,
   UseFormReturn,
@@ -116,6 +115,13 @@ export const useForm = <T extends FormValues>({
     return isValid;
   };
 
+  const setValue = (name: keyof T, value: any) => {
+    setFormState((prev) => ({
+      ...prev,
+      values: { ...prev.values, [name]: value },
+    }));
+  };
+
   const reset = () => {
     const defaultValues = initialDefaultValues ?? ({} as T);
 
@@ -143,6 +149,7 @@ export const useForm = <T extends FormValues>({
     handleSubmit,
     errors: formState.errors,
     values: formState.values,
+    setValue,
     reset,
     validate,
     watch,

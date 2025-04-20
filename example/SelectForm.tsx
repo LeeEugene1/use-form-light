@@ -1,5 +1,5 @@
 import { useForm } from "use-form-light";
-import { Form, Input, Textarea, Button } from "use-form-light";
+import { Form, Input, Textarea, Button, Select, Option } from "use-form-light";
 
 type FormData = {
   name: string;
@@ -11,35 +11,38 @@ type FormData = {
 };
 
 function App() {
-  const { register, handleSubmit, errors, validate, reset, values, watch } =
-    useForm<FormData>({
-      defaultValues: {
-        name: "",
-        email: "",
-        mobile: "",
-        gender: "male",
-        agree: false,
-        message: "",
+  const {
+    register,
+    handleSubmit,
+    errors,
+    validate,
+    reset,
+    values,
+    watch,
+    setValue,
+  } = useForm<FormData>({
+    defaultValues: {
+      name: "",
+      email: "",
+      mobile: "",
+      gender: "",
+      agree: false,
+      message: "",
+    },
+    validationRules: {
+      name: {
+        pattern: /^.{2,}$/,
+        message: "required 2 characters",
       },
-      validationRules: {
-        name: {
-          pattern: /^.{2,}$/,
-          message: "이름은 2자 이상이어야 합니다",
-        },
-        email: {
-          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-          message: "올바른 이메일 형식이 아닙니다",
-        },
-      },
-    });
+    },
+  });
 
   const onSubmit = (data: FormData) => {
     const isValid = validate();
     if (!isValid) {
       return;
     }
-    alert("제출되었습니다.");
-    console.log(data);
+    alert("submit success.");
   };
 
   return (
@@ -47,32 +50,50 @@ function App() {
       <h1>use-form-light 테스트</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <div style={{ marginBottom: "10px" }}>
-          이름:{" "}
+          Name:{" "}
           <Input
             register={register("name")}
             error={errors.name}
-            placeholder="이름을 입력해주세요"
+            placeholder="name"
           />
         </div>
         <div style={{ marginBottom: "10px" }}>
-          이메일:{" "}
+          <label htmlFor="email">Email:</label>
           <Input
             register={register("email")}
-            placeholder="이메일을 입력해주세요"
+            placeholder="email"
             error={errors.email}
           />
+          <Select
+            name="email"
+            id="email"
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              const combinedEmail =
+                watch("email").split("@")[0] + e.target.value;
+              setValue("email", combinedEmail);
+            }}
+          >
+            <Option value="">Custom</Option>
+            <Option value="@naver.com">naver.com</Option>
+            <Option value="@gmail.com">gmail.com</Option>
+            <Option value="@hanmail.net">hanmail.net</Option>
+            <Option value="@kakao.com">kakao.com</Option>
+            <Option value="@nate.com">nate.com</Option>
+            <Option value="@yahoo.com">yahoo.com</Option>
+            <Option value="@hotmail.com">hotmail.com</Option>
+          </Select>
         </div>
         <div style={{ marginBottom: "10px" }}>
-          휴대폰번호:{" "}
+          Mobile:{" "}
           <Input
             type="number"
             register={register("mobile")}
-            placeholder="휴대폰번호를 입력해주세요"
+            placeholder="mobile"
             error={errors.mobile}
           />
         </div>
         <div style={{ marginBottom: "10px", display: "flex", gap: "10px" }}>
-          성별:{" "}
+          Gender:{" "}
           <div>
             <Input
               id="male"
@@ -80,7 +101,7 @@ function App() {
               register={register("gender")}
               checked={watch("gender") === "male"}
             />
-            <label htmlFor="male">남성</label>
+            <label htmlFor="male">Male</label>
           </div>
           <div>
             <Input
@@ -89,18 +110,18 @@ function App() {
               register={register("gender")}
               checked={watch("gender") === "female"}
             />
-            <label htmlFor="female">여성</label>
+            <label htmlFor="female">Female</label>
           </div>
         </div>
         <div style={{ marginBottom: "10px", display: "flex", gap: "10px" }}>
           <Input id="agree" type="checkbox" register={register("agree")} />
-          <label htmlFor="agree">이용약관에 동의합니다</label>
+          <label htmlFor="agree">agree to terms</label>
         </div>
 
         <Textarea
           register={register("message")}
           error={errors.message}
-          placeholder="메시지를 입력해주세요"
+          placeholder="message"
         />
 
         <div
@@ -111,10 +132,10 @@ function App() {
           }}
         >
           <Button type="submit" style={{ width: "50%" }}>
-            제출
+            Submit
           </Button>
           <Button type="button" style={{ width: "50%" }} onClick={reset}>
-            초기화
+            Reset
           </Button>
         </div>
       </Form>
