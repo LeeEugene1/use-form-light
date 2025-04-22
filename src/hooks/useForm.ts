@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  ValidationRules,
-  FormValues,
-  UseFormReturn,
-} from "../types";
+import { ValidationRules, FormValues, UseFormReturn, Resolver } from "../types";
 
 type FormState<T> = {
   values: T;
@@ -13,16 +9,54 @@ type FormState<T> = {
 type UseFormOptions<T extends FormValues> = {
   defaultValues?: T;
   validationRules?: ValidationRules<T>;
+  resolver?: Resolver<T>;
 };
 
 export const useForm = <T extends FormValues>({
   defaultValues: initialDefaultValues,
   validationRules,
+  resolver,
 }: UseFormOptions<T> = {}): UseFormReturn<T> => {
   const [formState, setFormState] = useState<FormState<T>>({
     values: initialDefaultValues ?? ({} as T),
     errors: {},
   });
+
+  const validate = async () => {
+    const newErrors: Record<string, string> = {};
+    let isValid = true;
+
+    if (resolver) {
+      try {
+        const result = await resolver(formState.values);
+        setFormState((prev) => ({
+          ...prev,
+          errors: result.errors,
+        }));
+        return Object.keys(result.errors).length === 0;
+      } catch (error) {
+        console.error("Validation error:", error);
+        return false;
+      }
+    }
+
+    if (validationRules) {
+      Object.entries(formState.values).forEach(([key, value]) => {
+        const rule = validationRules[key];
+        if (rule && !rule.pattern.test(String(value))) {
+          newErrors[key] = rule.message;
+          isValid = false;
+        }
+      });
+    }
+
+    setFormState((prev) => ({
+      ...prev,
+      errors: { ...prev.errors, ...newErrors },
+    }));
+
+    return isValid;
+  };
 
   const register = (name: keyof T) => ({
     name,
@@ -52,19 +86,9 @@ export const useForm = <T extends FormValues>({
         }));
       }
 
-      // 해당 필드의 validation rule이 있으면 즉시 검증
-      const rule = validationRules?.[name];
-      if (rule) {
-        const isValid = rule.pattern.test(value);
-        setFormState((prev) => ({
-          ...prev,
-          errors: {
-            ...prev.errors,
-            [name]: isValid ? "" : rule.message,
-          },
-        }));
+      if (resolver || validationRules?.[name]) {
+        validate();
       } else {
-        // validation rule이 없으면 에러 초기화
         setFormState((prev) => ({
           ...prev,
           errors: { ...prev.errors, [name]: "" },
@@ -78,41 +102,6 @@ export const useForm = <T extends FormValues>({
       return formState.values[name];
     }
     return formState.values;
-  };
-
-  const handleSubmit = (callback: (data: T) => void) => {
-    return (e: React.FormEvent) => {
-      e.preventDefault();
-      const isValid = validate();
-      if (!isValid) {
-        return;
-      }
-      callback(formState.values);
-    };
-  };
-
-  const validate = () => {
-    if (!validationRules) return true;
-
-    let isValid = true;
-    const newErrors: Record<string, string> = {};
-
-    Object.entries(validationRules).forEach(([name, rule]) => {
-      if (!rule) return;
-      const value = formState.values[name as keyof T];
-      const isValidField = rule.pattern.test(String(value));
-      if (!isValidField) {
-        isValid = false;
-        newErrors[name] = rule.message;
-      }
-    });
-
-    setFormState((prev) => ({
-      ...prev,
-      errors: newErrors,
-    }));
-
-    return isValid;
   };
 
   const setValue = (name: keyof T, value: any) => {
@@ -142,6 +131,16 @@ export const useForm = <T extends FormValues>({
       values: defaultValues,
       errors: {},
     });
+  };
+
+  const handleSubmit = (callback: (data: T) => void) => {
+    return async (e: React.FormEvent) => {
+      e.preventDefault();
+      const isValid = await validate();
+      if (isValid) {
+        callback(formState.values);
+      }
+    };
   };
 
   return {

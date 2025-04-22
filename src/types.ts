@@ -49,6 +49,11 @@ export type ButtonProps = {
   children?: ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
+export type Resolver<T> = (data: T) => Promise<{
+  values: T;
+  errors: Record<string, string>;
+}>;
+
 export type UseFormReturn<T extends FormValues> = {
   register: (name: keyof T) => {
     name: keyof T;
@@ -62,7 +67,7 @@ export type UseFormReturn<T extends FormValues> = {
   values: T;
   setValue: (name: keyof T, value: any) => void;
   reset: () => void;
-  validate: () => boolean;
+  validate: () => Promise<boolean>;
   watch: (name?: keyof T) => T[keyof T] | T;
 };
 

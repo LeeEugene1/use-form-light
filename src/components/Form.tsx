@@ -1,6 +1,13 @@
 import React from "react";
 import { styles } from "./Form.css";
-import type { FormProps, InputProps, TextareaProps, ButtonProps, SelectProps, OptionProps } from "../types";
+import type {
+  FormProps,
+  InputProps,
+  TextareaProps,
+  ButtonProps,
+  SelectProps,
+  OptionProps,
+} from "../types";
 
 const Input: React.FC<InputProps & ButtonProps> = ({
   register,
@@ -74,10 +81,7 @@ const Select: React.FC<SelectProps> = ({
   );
 };
 
-const Option: React.FC<OptionProps> = ({
-  children,
-  ...props
-}) => {
+const Option: React.FC<OptionProps> = ({ children, ...props }) => {
   return <option {...props}>{children}</option>;
 };
 
